@@ -1,0 +1,4 @@
+# Note the submodule name is different than the name on my path, since I prefer the OS Coursework name on my own machine
+[submodule "UNI-OS-CW"]
+	path = OS Coursework
+	url = https://github.com/SamanTavassoli/UNI-OS-CW
