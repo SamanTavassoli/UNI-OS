@@ -2,12 +2,14 @@
 
 # Ignored
 .vscode
+.DS_Store
 
 # Ignore all top level sub dirs apart from specified dirs (! prefix):
 /*
 /*/
 !/OS*Coursework/
 !/Tutorials/
+!.git
 !.gitignore
 !.gitmodules
 !README.md
