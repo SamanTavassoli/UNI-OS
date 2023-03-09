@@ -28,5 +28,12 @@ int main(int argc, char** argv) {
     // Specifiy boolalpha format for boolean, otherwise it shows 1
     std::cout << "Are the two typedefs equivalent: " << std::boolalpha << (typeid(piece) == typeid(piece2)) << std::endl;
 
+    std::cout << "size of enum: \t\t\t" << sizeof(PieceFirstTypeDef) << " bytes" << std::endl;
+
+    std::cout << "size of pointer enum: \t\t" << sizeof(PieceFirstTypeDef*) << " bytes" << std::endl;
+    std::cout << "size of int pointer: \t\t" << sizeof(int*) << " bytes" << std::endl;
+    std::cout << "size of void pointer: \t\t" << sizeof(void*) << " bytes" << std::endl;
+    std::cout << "size of long pointer: \t\t" << sizeof(long*) << " bytes" << std::endl;
+
     return 0;
 }
