@@ -7,6 +7,7 @@ int main(int argc, char** argv) {
     std::cout << "size of char: \t\t\t" << sizeof(char) << " bytes" << std::endl;
     std::cout << "size of short [int]: \t\t" << sizeof(short) << " bytes" << std::endl;
     std::cout << "size of int: \t\t\t" << sizeof(int) << " bytes" << std::endl;
+    std::cout << "size of unsigned int: \t\t" << sizeof(unsigned int) << " bytes" << std::endl;
     std::cout << "size of long [int]: \t\t" << sizeof(long) << " bytes" << std::endl;
     std::cout << "size of long long [int]: \t" << sizeof(long long) << " bytes" << std::endl;
 
