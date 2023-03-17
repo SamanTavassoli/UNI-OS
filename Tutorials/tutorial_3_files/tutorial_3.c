@@ -2,6 +2,7 @@
 // Examples retyped & modified from slides "Coding in C, Functions"
 ///
 #include <stdio.h>
+#include <string.h>
 
 /*
     Declaring and calling a function
@@ -58,6 +59,27 @@ main2()
     // a is 1,  b is 2
 }
 
+void count(char c, int *counts) {
+    if (c == 'a') counts[0]++;
+    if (c == 'b') counts[1]++;
+    if (c == 'e') counts[2]++;
+}
+
+int
+main3()
+{
+    // end of slides C4 exercise
+    char str[] = "The overwhelming majority of program bugs and computer crashes stem from problems of memory access, allocation, or deallocation. Such memory-related errors are also notoriously difficult to debug.";
+    
+    int counts[] = {0, 0, 0};
+    for (int i = 0; i < strlen(str); i++) {
+        count(str[i], counts); // note that arrays are passed in by pointer of first element so no need to get reference
+    }
+    printf("a count: %d, b count: %d, e count: %d\n", counts[0], counts[1], counts[2]);
+
+    return 0;
+}
+
 /*
 
 */
@@ -67,5 +89,6 @@ main()
 {
     main1();
     main2();
+    main3();
     return 0;
 }
