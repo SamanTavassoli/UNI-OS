@@ -4,6 +4,7 @@
 
 #include <boost/interprocess/shared_memory_object.hpp>
 #include <boost/interprocess/mapped_region.hpp>
+#include <sys/wait.h>
 #include <string>
 #include <iostream>
 
@@ -14,26 +15,42 @@ int main(int argc, char *argv[]) {
 
     string shm_name = "shared_memory";
     size_t shm_size = 10000; // Bytes
-
-    // All interactions with the shared memory space (via any process) is done via this object
-    shared_memory_object shm_obj(open_or_create, shm_name.c_str(), read_write);
-    // Default size is 0 so must truncate
+ 
+    // note that create_only lets us check that it was successfully removed last time
+    shared_memory_object shm_obj(create_only, shm_name.c_str(), read_write);
     shm_obj.truncate(shm_size);
 
-    // Must specify how much of the shared memory to map to current process
-    mapped_region region(shm_obj, read_write, shm_size/2, shm_size-shm_size/2);
-    void* address = region.get_address();
-    size_t size = region.get_size();
+    pid_t pid = fork();
 
-    cout << "Address of created memory region: " <<  address << endl;
-    cout << "Size of created memory region: " <<  size << endl;
+    if (pid < 0) {
+        cout << "ERROR: Process failed" << endl;
+        return 1;
+    } else if (pid == 0) { // child
+        mapped_region region(shm_obj, read_write, 0, shm_size);
+        string message = "This is a message created in the child after forking, pid of child: " + to_string(getpid());
+        memcpy(region.get_address(), message.c_str(), message.size());
+        // exit(0);
+    } else {
+        int status; // to hold exit status of child
+        pid_t w = wait(&status); // this by default waits until child suspends execution
+        if (w == -1) { // standard error handling on failure
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+        mapped_region region(shm_obj, read_only, 0, shm_size);
+        char buffer[512];
+        memcpy(&buffer, region.get_address(), 512);
+        cout << buffer << endl;
+        
+        if (!shared_memory_object::remove(shm_name.c_str())) {
+            cout << "ERROR: Couldn't remove shared memory object" << endl;
+        }
 
-    // Must explicitly remove (yes it's a static function)
-    shared_memory_object::remove(shm_name.c_str());
-
-    // Make sure we've removed this shared memory region by trying to open it (throws)
-    // Note that it's cleared on reboot since it has kernel persistence
-    shared_memory_object shm_obj2(open_only, shm_name.c_str(), read_write);
+        // TODO: Wierd that I can still access and retreive the message but investigation left for later
+        char buffer2[512];
+        memcpy(&buffer2, region.get_address(), 512);
+        cout << buffer2 << endl;
+    }
 
 
     return 0;

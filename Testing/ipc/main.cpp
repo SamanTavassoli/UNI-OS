@@ -6,9 +6,11 @@
  * Haven't gotten so far yet because I'm confusing myself with c and c++, do this when I have time
  *  things to figure out:
  *      - how to correctly manage spawning new processes and cleaning up    [DONE 17/04/23]
- *      - how the creation of shared memory works                           []
+ *      - how the creation of shared memory works                           [DONE 17/04/23]
  *      - how to write to files                                             []
  *      - how are all of these different in c/c++                           []
+ *      - implement message passing                                         []
+ *      - implement signals                                                 []
 */
 
 #include <iostream>

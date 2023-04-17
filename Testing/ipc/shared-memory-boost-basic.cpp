@@ -20,6 +20,14 @@ int main(int argc, char *argv[]) {
     string shm_name = "shared_memory";
     size_t shm_size = 10000; // Bytes
 
+    // Note that this struct makes it so the remove function is automatically called at the end of exec
+    // because the object is destructed, and we also have it when its constructed
+    struct shm_remove
+      {
+         shm_remove() { shared_memory_object::remove("shared_memory"); }
+         ~shm_remove(){ shared_memory_object::remove("shared_memory"); }
+      } remover;
+
     // All interactions with the shared memory space (via any process) is done via this object
     shared_memory_object shm_obj(open_or_create, shm_name.c_str(), read_write);
     // Default size is 0 so must truncate
@@ -34,12 +42,8 @@ int main(int argc, char *argv[]) {
     cout << "Size of created memory region: " <<  size << endl;
 
     // Must explicitly remove (yes it's a static function)
-    shared_memory_object::remove(shm_name.c_str());
-
-    // Make sure we've removed this shared memory region by trying to open it (throws)
-    // Note that it's cleared on reboot since it has kernel persistence
-    shared_memory_object shm_obj2(open_only, shm_name.c_str(), read_write);
-
+    // shared_memory_object::remove(shm_name.c_str());
+    // Commented out since we have the shm_remove struct above to do that for us
 
     return 0;
 }
