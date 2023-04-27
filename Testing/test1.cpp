@@ -1,3 +1,7 @@
+/**
+ * Figuring out cw1 and pointer/object manipulation
+*/
+
 #include <iostream>
 
 using namespace std;
