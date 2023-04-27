@@ -1,0 +1,9 @@
+Basically explored pthreads and multithreading and some basic algorithms/code/patterns/whatever.
+
+Don't need to fully write them out, unless I just want to do it for fun, because some things are more/less
+defined in different programming languages and standards, and there many variants and use cases for each.
+
+Also when I do need to implement one of these, I probably won't need to implement it from scratch.
+
+On the other hand, exploring these gives me a broader range and sense of what I CAN do so keep adding to/exploring
+pthreads, locks and parallel/cocurrent programming here if I feel like it.

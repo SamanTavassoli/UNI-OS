@@ -1,6 +1,7 @@
 /**
  * Note run w/ c++11 and above
  * Good tutorial on pthreads - https://www.bogotobogo.com/cplusplus/multithreading_pthread.php
+ * can also use pthread_mutex (pthread_mutex_t) which is an already implemented mutex lock (lock, unlock, ...)
 */
 
 #include <iostream>

@@ -7,15 +7,15 @@
  * - https://stackoverflow.com/questions/16522858/understanding-of-pthread-cond-wait-and-pthread-cond-signal
  * 
  * Notes
- * - I tried to make this work my way, with my own sempahore & all, but c++ seems
- * to have it's own way of doing this, with the cond_wait and cond_signal, which I can just figure out
- * when I need to use it. For now I understand how this all works and time is better spent studying other things
+ * - The implementation is correct apart from putting the threads to sleep and waking them
+ * - Can try using pthread_cond_wait & signal while storing the conditional boolean variables in the list instead of the pthreads themselves 
 */
 
 #include <iostream>
 #include <pthread.h>
 #include <atomic>
 #include <list>
+// #include <semaphore.h>  // can also use this library instead of making it myself
 
 class SpinLock
 {
@@ -63,7 +63,8 @@ struct ThreadArgs
 void wait(Semaphore *S) {
     S->l->lock();
     if (S->value <= 0) {
-        S->list.push_back(some sort of self);
+        pthread_t current = get current thread somehow;
+        S->list.push_back(current);
         // sleep this thread's execution
         S->l->unlock();
     } else {
